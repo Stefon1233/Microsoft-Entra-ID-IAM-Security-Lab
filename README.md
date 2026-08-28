@@ -1,530 +1,781 @@
 # Microsoft Entra ID IAM & Security Lab
 
+![Microsoft Entra
+ID](https://img.shields.io/badge/Microsoft-Entra_ID-0078D4?style=for-the-badge)
+![IAM](https://img.shields.io/badge/Identity-Access_Management-5C2D91?style=for-the-badge)
+![Conditional
+Access](https://img.shields.io/badge/Security-Conditional_Access-0078D4?style=for-the-badge)
+![MFA](https://img.shields.io/badge/Authentication-MFA-107C10?style=for-the-badge)
+![RBAC](https://img.shields.io/badge/Access-RBAC-FFB900?style=for-the-badge)
+
 ## Overview
 
-This project demonstrates hands-on administration of Microsoft Entra ID in
-a simulated enterprise identity and access management environment.
+This project is a hands-on Microsoft Entra ID Identity and Access
+Management (IAM) security lab designed to demonstrate practical cloud
+identity administration, authentication security, Conditional Access,
+Role-Based Access Control (RBAC), monitoring, and troubleshooting.
 
-The lab focuses on practical IAM and identity-security tasks including
-user and group administration, multifactor authentication, Conditional
-Access, role-based access control, authentication-method configuration,
-sign-in investigation, audit-log analysis, and identity troubleshooting.
+The lab simulates common identity and security responsibilities performed
+by IT support, Microsoft 365, IAM, cloud support, and security
+administrators.
 
-Rather than documenting configuration alone, the project includes
-screenshots, validation tests, sign-in evidence, audit records, and
-troubleshooting examples to demonstrate how identity controls are
-configured, tested, monitored, and documented.
+Rather than documenting configuration alone, the project focuses on the
+complete administrative workflow:
 
----
+**Configure → Test → Validate → Investigate → Document**
 
-## Technologies and Services
+Conditional Access controls were deployed using a safer staged approach:
 
-- Microsoft Entra ID
-- Microsoft Entra admin center
-- Conditional Access
+**Configure → Report-only → Simulate → Validate → Investigate →
+Audit**
+
+## Project Highlights
+
+- Microsoft Entra ID user administration
+- Security group administration
 - Microsoft Authenticator
 - Multifactor Authentication
+- MFA number matching
+- Conditional Access
+- Named locations
+- Legacy authentication protection
+- Device platform restrictions
+- Device code authentication restrictions
+- Administrative portal protection
 - Role-Based Access Control
-- Microsoft Entra sign-in logs
-- Microsoft Entra audit logs
-- Authentication Methods
-- Named Locations
-- Conditional Access What If
-- Microsoft 365 identity services
+- Least-privilege administration
+- Sign-in log analysis
+- Audit-log investigation
+- Authentication troubleshooting
+- Conditional Access troubleshooting
 
 ---
 
-## Lab Objectives
+## Project Architecture
 
-The primary objectives of this lab were to:
+```text
+                         Microsoft Entra ID
+                                |
+        +-----------------------+-----------------------+
+        |                       |                       |
+     Identities            Authentication            RBAC
+        |                       |                       |
+   Users / Groups         MFA / Authenticator      Admin Roles
+        |                       |                       |
+        +-----------------------+-----------------------+
+                                |
+                       Conditional Access
+                                |
+         +----------------------+----------------------+
+         |              |              |              |
+        MFA          Locations       Devices        Auth Flows
+         |              |              |              |
+         +----------------------+----------------------+
+                                |
+                         Access Decision
+                                |
+                +---------------+---------------+
+                |                               |
+           Sign-In Logs                     Audit Logs
+                |                               |
+        Authentication Analysis         Change Investigation
+---
 
-- Build and manage test identities in Microsoft Entra ID
-- Organize identities with security groups
-- Configure multifactor authentication
-- Configure Microsoft Authenticator
-- Apply least-privilege administrative roles
-- Create and evaluate Conditional Access policies
-- Use Report-only deployment for safe policy testing
-- Restrict legacy authentication
-- Protect privileged access
-- Create trusted network locations
-- Restrict unsupported device platforms
-- Protect Microsoft administrative portals
-- Block device code authentication
-- Validate policies with the Conditional Access What If tool
-- Review authentication activity in sign-in logs
-- Review administrative changes in audit logs
-- Troubleshoot authentication and access issues
-- Document licensing and feature limitations
+## Lab Environment
+
+The project was completed in a dedicated Microsoft cloud lab environment
+using Microsoft Entra ID.
+
+Administrative work was performed through the Microsoft Entra admin
+center.
+
+The environment was structured around separate administrative and test
+identities so security controls could be evaluated without unnecessarily
+affecting the primary administrator.
+
+| Component | Purpose |
+|---|---|
+| Microsoft Entra ID | Identity and access management |
+| Microsoft Entra Admin Center | Identity/security administration |
+| Microsoft Authenticator | MFA registration and authentication |
+| Conditional Access | Context-aware access controls |
+| Microsoft Entra RBAC | Administrative permission delegation |
+| Sign-in Logs | Authentication investigation |
+| Audit Logs | Administrative change tracking |
+| What If | Conditional Access simulation |
+
+### Environment Evidence
+
+![Microsoft Entra ID Overview](Screenshots/Entra-ID/01-Entra-Overview.png)
+
+[Read the Environment Setup
+documentation](Documentation/01-Environment-Setup.md)
 
 ---
 
-# Environment
+## Identity and Group Administration
 
-The lab used dedicated test identities rather than production users.
+Dedicated security-lab identities were used for controlled testing.
 
-Examples included:
+Test identities simulated both standard users and privileged
+administrators.
 
-- CA Test User
-- CA Test Admin
-- Additional security-lab test users
-
-A dedicated Conditional Access test group was created:
+A dedicated security group was created:
 
 `SG-CA-Test-Users`
 
-Using dedicated test identities allowed policy behavior to be evaluated
-without broadly affecting other tenant users.
+The group provided a scalable target for Conditional Access policies
+instead of requiring policies to be assigned individually to each test
+identity.
+
+### Tasks Completed
+
+- Reviewed Microsoft Entra users
+- Used dedicated security test identities
+- Created security groups
+- Added users to groups
+- Verified group membership
+- Used group-based Conditional Access targeting
+- Separated standard and administrative testing
+
+### Security Lab Test Users
+
+![Microsoft Entra Security Lab Test
+Users](Screenshots/Users-Groups/02-Security-Lab-Test-Users.png)
+
+### Conditional Access Test Group
+
+![Conditional Access Test Group
+Membership](Screenshots/Users-Groups/04-CA-Test-Group-Membership.png)
+
+[View all User and Group evidence](Screenshots/Users-Groups/)
+
+[Read the User and Group documentation](Documentation/02-Users-Groups.md)
 
 ---
 
-# User and Group Administration
+### Block 2 of 6
 
-The Microsoft Entra environment included practical identity-management
-activities such as:
+```markdown
+## Multifactor Authentication & Microsoft Authenticator
 
-- Creating test user accounts
-- Reviewing user account properties
-- Creating security groups
-- Assigning users to security groups
-- Reviewing group membership
-- Using groups to scope security policies
+Microsoft Authenticator was configured and tested as part of the lab's
+authentication-security implementation.
 
-The test environment provided a controlled identity structure for MFA,
-RBAC, and Conditional Access testing.
+A test identity completed authentication registration and MFA validation.
 
-### Evidence
+Number matching was also tested to demonstrate stronger MFA verification.
 
-See:
+### Authentication Tasks
 
-`Screenshots/Users-Groups/`
+- Reviewed authentication-method configuration
+- Enabled Microsoft Authenticator
+- Completed security-information registration
+- Registered Microsoft Authenticator
+- Tested MFA
+- Tested number matching
+- Verified successful registration
+- Investigated authentication results
 
----
+### Microsoft Authenticator Configuration
 
-# Multifactor Authentication
+![Microsoft Authenticator
+Configuration](Screenshots/Authentication/04-Authenticator-Configuration.png)
 
-Multifactor authentication was configured and tested using Microsoft
-Authenticator.
+### MFA Number Matching
 
-Lab activities included:
+![MFA Number Matching
+Test](Screenshots/MFA/01-MFA-Number-Matching-Test.png)
 
-- Authenticator registration
-- Security registration prompts
-- Authentication-method configuration
-- Number-matching authentication
-- Successful MFA validation
-- Troubleshooting expired or interrupted authentication sessions
+### Authenticator Registration Success
 
-MFA was also incorporated into multiple Conditional Access policies.
+![Authenticator Registration
+Success](Screenshots/MFA/02-Authenticator-Registration-Success.png)
 
-### Evidence
+[View Authentication evidence](Screenshots/Authentication/)
 
-See:
+[View MFA evidence](Screenshots/MFA/)
 
-`Screenshots/MFA/`
-
-and:
-
-`Screenshots/Authentication/`
+[Read the MFA and Authentication
+documentation](Documentation/03-MFA-Authentication.md)
 
 ---
 
-# Authentication Methods
+## Conditional Access
 
-Authentication-method configuration was reviewed and documented within
-Microsoft Entra.
+Conditional Access was the primary security component of this project.
 
-Evidence includes:
+Multiple policies were created to demonstrate identity-based, role-based,
+location-based, device-based, application-based, and
+authentication-flow-based access controls.
 
-- Authentication Methods baseline
-- Microsoft Authenticator configuration
-- Authenticator availability for users
-- Security registration
-- Authentication-method setup
+Policies remained in **Report-only** mode during testing.
 
-These controls demonstrate how administrators manage the authentication
-mechanisms available to organizational identities.
+This provided a safer way to evaluate policy behavior without risking
+accidental administrative lockout.
 
-### Evidence
+### Conditional Access Policies
 
-See:
+| Policy | Security Objective | Mode |
+|---|---|---|
+| CA-Require-MFA-and-Compliant-Device | Require MFA/device security |
+Report-only |
+| CA001-Require-MFA-Test-Users | Require MFA for test users | Report-only
+|
+| CA002-Block-Legacy-Authentication | Block legacy authentication |
+Report-only |
+| CA003-Require-MFA-Admins | Require MFA for administrators | Report-only
+|
+| CA004-Block-Access-Outside-Trusted-Location | Restrict access by
+location | Report-only |
+| CA005-Block-Unsupported-Device-Platforms | Restrict unsupported
+platforms | Report-only |
+| CA006-Require-MFA-Admin-Portals | Protect administrative resources |
+Report-only |
+| CA007-Block-Device-Code-Authentication | Restrict device code
+authentication | Report-only |
 
-`Screenshots/Authentication/`
+### Final Conditional Access Policy Overview
+
+![Conditional Access Final Policy
+Overview](Screenshots/Conditional-Access/24-Conditional-Access-Final-Policy-Overview.png)
+
+This provides centralized evidence of the Conditional Access controls
+created during the lab.
 
 ---
 
-# Role-Based Access Control
+## MFA Enforcement
 
-Administrative permissions were configured using Microsoft Entra directory
-roles.
+Conditional Access was configured to require MFA for selected test
+identities.
 
-Roles evaluated included:
+### CA001 — Require MFA for Test Users
+
+![CA001 Require MFA Test
+Users](Screenshots/Conditional-Access/02-CA001-Require-MFA-Test-Users-Policy-Details.png)
+
+The policy was evaluated in Report-only mode before potential enforcement.
+
+---
+
+## Legacy Authentication Protection
+
+Legacy authentication protocols can weaken modern identity-security
+controls.
+
+A Conditional Access policy was configured to block legacy authentication
+clients.
+
+### CA002 — Block Legacy Authentication
+
+![CA002 Block Legacy
+Authentication](Screenshots/Conditional-Access/04-CA002-Block-Legacy-Authentication-Policy-Details.png)
+
+This demonstrates how organizations can reduce exposure to authentication
+methods that do not fully support modern security controls.
+
+---
+
+## Administrative MFA
+
+Privileged identities represent high-value targets.
+
+Conditional Access was configured to require MFA for selected Microsoft
+Entra administrative roles.
+
+### CA003 — Require MFA for Administrators
+
+![CA003 Require MFA for
+Administrators](Screenshots/Conditional-Access/05-CA003-Require-MFA-Admins-Policy-Details.png)
+
+This adds an additional authentication layer around privileged
+administration.
+
+---
+## Named Locations & Network-Based Access
+
+A named location was created to represent a trusted corporate network.
+
+The documentation-only TEST-NET range used for the lab was:
+
+`203.0.113.0/24`
+
+### Trusted Corporate Network
+
+![Trusted Corporate
+Network](Screenshots/Conditional-Access/13-Trusted-Corporate-Network-Named-Location.png)
+
+A Conditional Access policy was then configured to block access when
+authentication originated outside the trusted location.
+
+### CA004 — Block Access Outside Trusted Location
+
+![CA004 Block Outside Trusted
+Location](Screenshots/Conditional-Access/14-CA004-Block-Access-Outside-Trusted-Location-Policy-Details.png)
+
+---
+
+## Conditional Access What If Testing
+
+The Microsoft Entra Conditional Access **What If** tool was used to
+simulate authentication scenarios before policy enforcement.
+
+Policy behavior was evaluated using conditions such as:
+
+- User
+- Group
+- Application
+- Location
+- Device platform
+- Authentication flow
+
+### Outside Trusted Location
+
+![What If Outside Trusted
+Location](Screenshots/Conditional-Access/15-What-If-CA004-Outside-Trusted-Location.png)
+
+The simulation demonstrated that CA004 would apply when authentication
+originated outside the trusted location.
+
+### Trusted Location Exclusion
+
+![What If Trusted Location
+Excluded](Screenshots/Conditional-Access/16-What-If-CA004-Trusted-Location-Excluded.png)
+
+Testing from the simulated trusted network demonstrated that the location
+exclusion prevented CA004 from applying.
+
+Testing both positive and negative conditions provided stronger validation
+than simply creating the policy.
+
+---
+
+## Device Platform Security
+
+Conditional Access was configured to evaluate device-platform conditions.
+
+### CA005 — Block Unsupported Device Platforms
+
+![CA005 Unsupported Device
+Platforms](Screenshots/Conditional-Access/17-CA005-Block-Unsupported-Device-Platforms-Policy-Details.png)
+
+What If testing was used to validate expected behavior before enforcement.
+
+---
+
+## Microsoft Administrative Portal Protection
+
+Administrative portals provide access to sensitive cloud configuration.
+
+CA006 was created to require MFA for Microsoft administrative resources.
+
+### CA006 — Require MFA for Admin Portals
+
+![CA006 Require MFA Admin
+Portals](Screenshots/Conditional-Access/20-CA006-Require-MFA-Admin-Portals-Policy-Details.png)
+
+This demonstrates additional protection around privileged cloud
+administration.
+
+---
+
+## Device Code Authentication Protection
+
+Device code authentication is useful for devices with limited input
+capabilities, but the authentication flow can present security risks if
+abused.
+
+CA007 was created to block device code authentication for lab test
+identities.
+
+### CA007 — Block Device Code Authentication
+
+![CA007 Block Device Code
+Authentication](Screenshots/Conditional-Access/21-CA007-Block-Device-Code-Authentication-Policy-Details.png)
+
+### What If Validation
+
+![CA007 Device Code Flow
+Blocked](Screenshots/Conditional-Access/22-What-If-CA007-Device-Code-Flow-Blocked.png)
+
+The What If evaluation confirmed that CA007 matched the simulated device
+code authentication flow and produced the expected **Block access**
+result.
+
+[View all Conditional Access evidence](Screenshots/Conditional-Access/)
+
+[Read the complete Conditional Access
+documentation](Documentation/04-Conditional-Access.md)
+
+---
+## Role-Based Access Control
+
+Microsoft Entra directory roles were used to demonstrate least-privilege
+administration.
+
+Rather than granting broad administrative access to every account,
+specialized roles were assigned and tested.
+
+### Roles Tested
 
 - Conditional Access Administrator
 - Helpdesk Administrator
 - Security Reader
 
-The lab demonstrated how administrative responsibilities can be separated
-instead of assigning broad Global Administrator access.
+### Conditional Access Administrator
 
-Additional testing demonstrated that a Conditional Access Administrator
-could manage Conditional Access while remaining restricted from unrelated
-administrative capabilities.
+![Conditional Access
+Administrator](Screenshots/RBAC/01-Conditional-Access-Administrator.png)
 
-This reflects the principle of least privilege.
+This role was used for delegated Conditional Access administration.
 
-### Evidence
+### Helpdesk Administrator
 
-See:
+![Helpdesk Administrator](Screenshots/RBAC/02-Helpdesk-Administrator.png)
 
-`Screenshots/RBAC/`
+This role represents limited IT support responsibilities without requiring
+broad tenant administration.
 
----
+### Security Reader
 
-# Conditional Access
+![Security Reader](Screenshots/RBAC/03-Security-Reader.png)
 
-Conditional Access was one of the primary components of this project.
-
-Policies were intentionally maintained in:
-
-`Report-only`
-
-This allowed policy behavior to be evaluated without enforcing controls
-that could accidentally lock out administrators or test users.
-
-The deployment workflow followed:
-
-**Configure → Report-only → Simulate → Validate → Investigate → Audit
-→ Document**
+This role provides security visibility without configuration privileges.
 
 ---
 
-## Conditional Access Policies
+## Least-Privilege Validation
 
-### Baseline — Require MFA and Compliant Device
+Role assignment alone does not prove that least privilege is functioning.
 
-`CA-Require-MFA-and-Compliant-Device`
+The delegated Conditional Access administrator was tested to verify both
+allowed and restricted administrative functionality.
 
-Demonstrated a combined security requirement using:
+### Conditional Access Access
 
-- Multifactor authentication
-- Compliant-device requirement
-- Windows platform targeting
-- Report-only evaluation
+![CA Administrator Conditional
+Access](Screenshots/RBAC/04-CA-Admin-Conditional-Access.png)
 
----
+### Limited Administrative Permissions
 
-### CA001 — Require MFA for Test Users
+![CA Administrator Limited
+Permissions](Screenshots/RBAC/05-CA-Admin-Limited-Permissions.png)
 
-`CA001-Require-MFA-Test-Users`
+This demonstrated practical administrative separation rather than simply
+documenting role assignments.
 
-Purpose:
+[View all RBAC evidence](Screenshots/RBAC/)
 
-Require multifactor authentication for members of the Conditional Access
-test group.
-
-Validation included:
-
-- What If testing
-- Real sign-in activity
-- Report-only Conditional Access results
-- Successful MFA evaluation
+[Read the RBAC and Permissions
+documentation](Documentation/05-RBAC-Permissions.md)
 
 ---
 
-### CA002 — Block Legacy Authentication
+## Sign-In Monitoring
 
-`CA002-Block-Legacy-Authentication`
+Microsoft Entra sign-in logs were used to investigate authentication
+activity.
 
-Purpose:
-
-Block authentication through legacy client types that may not support
-modern identity-security controls such as MFA.
-
-Client types included:
-
-- Exchange ActiveSync clients
-- Other legacy clients
-
-Grant control:
-
-`Block access`
-
----
-
-### CA003 — Require MFA for Administrators
-
-`CA003-Require-MFA-Admins`
-
-Purpose:
-
-Strengthen privileged identity security by requiring MFA for selected
-administrative roles.
-
-The policy targeted multiple administrative roles while remaining in
-Report-only mode for safe evaluation.
-
----
-
-### CA004 — Block Access Outside Trusted Location
-
-`CA004-Block-Access-Outside-Trusted-Location`
-
-Purpose:
-
-Demonstrate network-location-based access restrictions.
-
-A trusted named location was created:
-
-`Trusted-Corporate-Network`
-
-Documentation IP range:
-
-`203.0.113.0/24`
-
-What If validation demonstrated both sides of the policy:
-
-- Outside trusted location → policy applies
-- Trusted location → policy excluded
-
----
-
-### CA005 — Block Unsupported Device Platforms
-
-`CA005-Block-Unsupported-Device-Platforms`
-
-Purpose:
-
-Restrict access from unsupported device platforms.
-
-What If testing using a simulated macOS sign-in showed that CA005 matched
-the scenario and would result in:
-
-`Block access`
-
-The policy remained in Report-only mode.
-
----
-
-### CA006 — Require MFA for Admin Portals
-
-`CA006-Require-MFA-Admin-Portals`
-
-Purpose:
-
-Protect access to Microsoft administrative portals with multifactor
-authentication.
-
-The policy targeted Microsoft Admin Portals and required MFA.
-
-Policy Details were used as configuration evidence.
-
----
-
-### CA007 — Block Device Code Authentication
-
-`CA007-Block-Device-Code-Authentication`
-
-Purpose:
-
-Restrict device code authentication.
-
-Configuration included:
-
-- Test identities
-- All resources
-- Device code authentication flow
-- Block access
-- Report-only deployment
-
-Conditional Access What If testing successfully showed CA007 under
-policies that would apply with:
-
-`Block access`
-
----
-
-# Conditional Access Validation
-
-Conditional Access policies were not considered complete after creation.
-
-Validation included:
-
-- Policy Details review
-- What If simulation
-- Positive-match testing
-- Policy-exclusion testing
-- Sign-in log review
-- Report-only results
-- Audit-log investigation
-
-What If testing evaluated variables such as:
+Sign-in analysis included reviewing:
 
 - User identity
-- Target resource
-- Device platform
-- Client application
-- Network location
-- Authentication flow
-
-Reviewing both **Policies that will apply** and **Policies that will not
-apply** helped identify why individual policies matched or did not match a
-simulated authentication event.
-
-### Evidence
-
-See:
-
-`Screenshots/Conditional-Access/`
-
-Detailed documentation:
-
-`Documentation/04-Conditional-Access.md`
-# Sign-In Log Investigation
-
-Microsoft Entra sign-in logs were reviewed to investigate authentication
-activity from the test identities.
-
-Information reviewed included:
-
-- User
 - Application
-- Authentication requirement
 - Authentication status
-- MFA result
-- Conditional Access evaluation
-- Date and time
+- MFA requirements
+- Conditional Access results
+- Authentication interruptions
 
-A successful test-user sign-in demonstrated:
+### Successful MFA Sign-In
 
-- Azure Portal authentication
-- Multifactor authentication requirement
-- Successful authentication
-- MFA requirement satisfied
-- CA001 evaluated successfully in Report-only mode
+![Successful MFA
+Sign-In](Screenshots/Conditional-Access/09-Sign-In-MFA-Success.png)
 
-The project also includes an interrupted sign-in involving an expired
-password as a troubleshooting example.
-
-Sensitive network information that was unnecessary for the portfolio was
-removed or cropped from public screenshots.
+One successful authentication demonstrated that the MFA requirement had
+been satisfied by an MFA claim associated with the authentication session.
 
 ---
 
-# Audit Log Investigation
+## Report-Only Policy Validation
 
-Microsoft Entra audit logs were used to verify administrative changes.
+Conditional Access Report-only mode allowed policy behavior to be observed
+without actively enforcing the access decision.
 
-Audit evidence was captured for creation of:
+### CA001 Report-Only Evaluation
 
-`CA007-Block-Device-Code-Authentication`
+![CA001 Report Only
+Evaluation](Screenshots/Conditional-Access/11-CA001-Report-Only-Test-User-Evaluation.png)
 
-The activity showed:
+### CA001 Report-Only Success
 
-`Add conditional access policy`
+![CA001 Report Only
+Success](Screenshots/Conditional-Access/12-CA001-Report-Only-Success.png)
 
-Audit-log review demonstrates practical understanding of:
+This staged deployment approach reduces the risk of accidental user or
+administrator lockout.
 
-- Administrative accountability
-- Configuration tracking
-- Change investigation
-- Security monitoring
-- Troubleshooting
+---
+
+## Audit Log Investigation
+
+Microsoft Entra audit logs were used to validate administrative changes.
+
+The audit trail provided evidence that Conditional Access configuration
+changes were recorded.
+
+### Directory Audit Activity
+
+![Entra ID Audit
+Logs](Screenshots/Conditional-Access/25-Entra-ID-Audit-Logs-Directory-Activity.png)
+
+### CA007 Policy Creation
+
+![CA007 Policy Creation
+Audit](Screenshots/Conditional-Access/26-Audit-Log-CA007-Policy-Creation-Success.png)
+
+### CA007 Modified Properties
+
+![CA007 Modified
+Properties](Screenshots/Conditional-Access/27-Audit-Log-CA007-Policy-Modified-Properties.png)
+
+This demonstrates how administrators can correlate configuration activity
+with Microsoft Entra audit records.
+
+---
+## Identity Security Strategy
+
+The controls implemented throughout this project form a layered
+identity-security model.
+
+```text
+Identity
+   |
+   v
+Strong Authentication
+   |
+   v
+MFA / Microsoft Authenticator
+   |
+   v
+Least-Privilege RBAC
+   |
+   v
+Conditional Access
+   |
+   +---- Identity
+   +---- Application
+   +---- Location
+   +---- Device Platform
+   +---- Authentication Flow
+   |
+   v
+Access Decision
+   |
+   v
+Sign-In Monitoring
+   |
+   v
+Audit & Investigation
+```
+
+The goal is not to rely on a single security mechanism.
+
+Instead, identity protection is strengthened through multiple overlapping
+controls.
+
+[Read the Identity Security
+documentation](Documentation/06-Identity-Security.md)
+
+---
+
+## Troubleshooting
+
+Troubleshooting was treated as a core component of the project rather than
+documenting only successful configurations.
+
+The troubleshooting workflow was:
+
+**Identify → Reproduce → Investigate → Isolate → Correct → Validate
+→ Document**
+
+### Scenarios Investigated
+
+- MFA registration session expiration
+- Expired password sign-in interruption
+- Conditional Access policy matching
+- Conditional Access policy exclusions
+- Group membership validation
+- MFA claims
+- RBAC permissions
+- Sign-in results
+- Audit events
+- Licensing limitations
+
+### MFA Registration Session Expired
+
+![MFA Registration Session
+Expired](Screenshots/Troubleshooting/01-MFA-Registration-Session-Expired.png)
+
+### Interrupted Sign-In / Expired Password
+
+![Expired Password Sign
+In](Screenshots/Conditional-Access/10-Sign-In-Interrupted-Expired-Password.png)
+
+### Conditional Access Policies Not Applied
+
+![Conditional Access Policies Not
+Applied](Screenshots/Conditional-Access/07-What-If-Policies-Not-Applied.png)
+
+These scenarios demonstrate using Microsoft Entra evidence and diagnostic
+tools to determine the cause of identity and access issues rather than
+assuming the source of the problem.
+
+[Read the complete Troubleshooting
+documentation](Documentation/07-Troubleshooting.md)
+
+---
+
+## Licensing Limitation Identified
+
+Risk-based Conditional Access was investigated during the project.
+
+The lab tenant did not expose the required **Sign-in risk** condition for
+the planned risk-based Conditional Access policy.
+
+Instead of representing an unsupported feature as successfully configured,
+the limitation was documented and the project continued using supported
+Conditional Access scenarios.
+
+This demonstrates an important real-world cloud administration skill:
+
+**Distinguishing configuration problems from licensing and
+feature-availability limitations.**
+
+---
+
+## Security Practices Demonstrated
+
+### Defense in Depth
+
+Multiple security controls were combined rather than relying on passwords
+alone.
+
+### Least Privilege
+
+Administrative permissions were separated using specialized Microsoft
+Entra directory roles.
+
+### Strong Authentication
+
+MFA and Microsoft Authenticator were configured and tested.
+
+### Controlled Deployment
+
+Conditional Access policies remained in Report-only mode while being
+evaluated.
+
+### Positive and Negative Testing
+
+Policies were tested under conditions where they should apply and
+conditions where they should not apply.
+
+### Monitoring
+
+Sign-in logs were used to validate authentication behavior and investigate
+access events.
+
+### Auditing
+
+Audit logs were used to verify administrative changes and review policy
+activity.
+
+### Troubleshooting
+
+Authentication and access issues were investigated using Microsoft Entra
+diagnostic information and controlled testing.
+
+---
+## Skills Demonstrated
+
+### Identity & Access Management
+
+- Microsoft Entra ID
+- User administration
+- Security group administration
+- Group membership management
+- IAM administration
+- Identity security
+- Access management
+
+### Authentication
+
+- Multifactor Authentication
+- Microsoft Authenticator
+- MFA number matching
+- Authentication methods
+- Authentication registration
+- Authentication troubleshooting
+
+### Conditional Access
+
+- User and group targeting
+- Administrative-role targeting
+- Application targeting
+- Named locations
+- Device platform conditions
+- Authentication flow conditions
+- Block access controls
+- MFA grant controls
+- Report-only deployment
+- What If testing
 - Policy validation
 
-### Evidence
+### Administrative Security
 
-See:
+- Microsoft Entra RBAC
+- Conditional Access Administrator
+- Helpdesk Administrator
+- Security Reader
+- Least privilege
+- Administrative separation
+- Permission validation
 
-`Screenshots/Conditional-Access/25-Entra-ID-Audit-Logs-Directory-Activity.png`
+### Monitoring & Troubleshooting
 
-`Screenshots/Conditional-Access/26-Audit-Log-CA007-Policy-Creation-Success.png`
-
-`Screenshots/Conditional-Access/27-Audit-Log-CA007-Policy-Modified-Properties.png`
-
----
-
-# Troubleshooting
-
-The lab included identity and authentication troubleshooting rather than
-only successful configurations.
-
-Examples included:
-
-- Expired authentication session
-- Interrupted sign-in
-- Expired password
-- Conditional Access policy not applying
-- Conditional Access policy exclusions
-- Unsupported What If resource selection
-- Feature availability limitations
-
-Troubleshooting focused on using Microsoft Entra logs and policy
-evaluation data to determine why authentication or policy behavior
-differed from expectations.
-
-### Evidence
-
-See:
-
-`Screenshots/Troubleshooting/`
-
-and:
-
-`Screenshots/Conditional-Access/`
+- Sign-in log analysis
+- Audit-log investigation
+- Conditional Access troubleshooting
+- MFA troubleshooting
+- Password troubleshooting
+- Group membership validation
+- RBAC troubleshooting
+- Licensing investigation
+- Root-cause analysis
 
 ---
 
-# Licensing and Feature Limitations
+## Documentation
 
-A risk-based Conditional Access policy was evaluated during the lab.
+Detailed technical documentation is available for each major section of
+the project:
 
-The intended configuration would have required MFA for medium- and
-high-risk sign-ins.
-
-However, the tenant did not expose the Sign-in risk condition.
-
-Rather than substituting an unrelated security control and presenting it
-as risk-based Conditional Access, the limitation was documented and the
-project continued with controls supported by the available environment.
-
-This demonstrates the importance of understanding licensing and feature
-availability when administering Microsoft cloud environments.
+1. [Environment Setup](Documentation/01-Environment-Setup.md)
+2. [Users & Groups](Documentation/02-Users-Groups.md)
+3. [MFA & Authentication](Documentation/03-MFA-Authentication.md)
+4. [Conditional Access](Documentation/04-Conditional-Access.md)
+5. [RBAC & Permissions](Documentation/05-RBAC-Permissions.md)
+6. [Identity Security](Documentation/06-Identity-Security.md)
+7. [Troubleshooting](Documentation/07-Troubleshooting.md)
 
 ---
 
-# Safe Conditional Access Deployment
-
-Conditional Access policies can affect authentication across an entire
-organization.
-
-A poorly configured policy can result in widespread access problems or
-administrative lockout.
-
-For this reason, the lab used a staged security workflow:
-
-1. Create dedicated test identities.
-2. Scope policies to appropriate identities.
-3. Configure the intended conditions.
-4. Configure access controls.
-5. Set the policy to Report-only.
-6. Run What If simulations.
-7. Review sign-in results.
-8. Investigate non-applicable policies.
-9. Review administrative audit activity.
-10. Document the final configuration.
-
-A production rollout could continue with:
-
-**Report-only → Pilot Group → Monitor → Enforce**
-
----
-
-# Repository Structure
+## Repository Structure
 
 ```text
 Microsoft-Entra-ID-IAM-Security-Lab/
-│
+|
+├── README.md
+|
 ├── Documentation/
 │   ├── 01-Environment-Setup.md
 │   ├── 02-Users-Groups.md
@@ -533,125 +784,79 @@ Microsoft-Entra-ID-IAM-Security-Lab/
 │   ├── 05-RBAC-Permissions.md
 │   ├── 06-Identity-Security.md
 │   └── 07-Troubleshooting.md
-│
+|
 ├── Screenshots/
 │   ├── Authentication/
 │   ├── Conditional-Access/
 │   ├── Entra-ID/
-│   ├── Identity-Security/
 │   ├── MFA/
 │   ├── RBAC/
-│   ├── Sign-In-Logs/
 │   ├── Troubleshooting/
 │   └── Users-Groups/
-│
-├── Diagrams/
+|
 ├── Help-Desk-Tickets/
-├── .gitignore
-└── README.md
+|
+└── Diagrams/
 ```
 
 ---
 
-# Documentation
+## Key Takeaways
 
-Detailed implementation notes are available in:
+This project demonstrates that identity administration involves much more
+than creating users and resetting passwords.
 
-- `Documentation/01-Environment-Setup.md`
-- `Documentation/02-Users-Groups.md`
-- `Documentation/03-MFA-Authentication.md`
-- `Documentation/04-Conditional-Access.md`
-- `Documentation/05-RBAC-Permissions.md`
-- `Documentation/06-Identity-Security.md`
-- `Documentation/07-Troubleshooting.md`
+A secure Microsoft Entra environment requires administrators to understand
+how identity, authentication, authorization, access policies, monitoring,
+and auditing work together.
 
-The Conditional Access documentation contains detailed policy
-configuration, validation methodology, sign-in analysis, audit evidence,
-security rationale, and screenshot references.
+Key lessons from the project include:
 
----
-# Skills Demonstrated
-
-This project demonstrates hands-on experience with:
-
-- Microsoft Entra ID
-- Identity and Access Management
-- User administration
-- Group administration
-- Multifactor Authentication
-- Microsoft Authenticator
-- Authentication Methods
-- Conditional Access
-- Report-only Conditional Access deployment
-- Conditional Access What If
-- Named Locations
-- Legacy authentication restrictions
-- Device-platform restrictions
-- Authentication-flow restrictions
-- Administrative portal protection
-- Role-Based Access Control
-- Least privilege
-- Privileged identity security
-- Sign-in log analysis
-- Audit log analysis
-- Identity troubleshooting
-- Security-policy validation
-- Change tracking
-- Microsoft cloud administration
-- Technical documentation
-
----
-
-# Security Practices Demonstrated
-
-Security practices applied during the lab included:
-
-- Least-privilege administrative access
-- Dedicated test identities
-- Group-based policy targeting
-- MFA for users and administrators
-- Blocking legacy authentication
-- Trusted-location design
-- Device-platform restrictions
-- Device code authentication restrictions
-- Report-only policy deployment
-- Positive and negative policy testing
-- Authentication monitoring
-- Administrative audit review
-- Public screenshot sanitization
-- Documentation of licensing limitations
-
----
-# Key Takeaways
-
-This lab reinforced that identity security involves more than creating
-users or enabling MFA.
-
-Effective Microsoft Entra administration requires administrators to
-understand how identities, authentication methods, roles, Conditional
-Access policies, device conditions, locations, applications, and
-authentication flows interact.
-
-It also demonstrated that security policies should be tested and monitored
-before enforcement.
-
-The combination of configuration evidence, What If simulation, real
-sign-in investigation, Report-only validation, RBAC testing,
-troubleshooting, and audit-log analysis provides a practical demonstration
-of Microsoft Entra ID IAM and security administration.
+- MFA provides an important defense against password compromise.
+- Conditional Access allows authentication context to influence access
+decisions.
+- Report-only deployment reduces the risk associated with new access
+policies.
+- What If testing provides a controlled way to validate policy logic.
+- Named locations can support location-aware security decisions.
+- Legacy authentication should be restricted where possible.
+- Privileged administrative access should receive stronger protection.
+- RBAC helps enforce least privilege.
+- Sign-in logs provide critical authentication evidence.
+- Audit logs provide accountability for administrative changes.
+- Licensing can determine which identity-security capabilities are
+available.
+- Effective troubleshooting requires validating the complete
+authentication path rather than assuming a single cause.
 
 ---
 
 ## Portfolio Purpose
 
-This project was created as a hands-on portfolio lab to demonstrate
-practical skills relevant to roles such as:
+This repository was created as a practical demonstration of Microsoft
+cloud identity and security administration.
+
+It is intended to demonstrate hands-on skills relevant to roles such as:
 
 - IT Support Specialist
 - Help Desk Technician
 - Microsoft 365 Support Specialist
-- Identity and Access Management Support
-- Cloud Support Technician
-- Junior Systems Administrator
 - Microsoft Entra ID Administrator
-- Technical Support Specialist
+- Identity and Access Management Analyst
+- Cloud Support Specialist
+- Junior Systems Administrator
+- Security Support Analyst
+
+The project emphasizes not only configuration, but also **testing,
+validation, troubleshooting, monitoring, security analysis, and technical
+documentation**.
+
+---
+
+## Project Status
+
+**Complete**
+
+The lab includes configured identity-security controls, validation
+testing, screenshots, detailed documentation, and troubleshooting
+evidence.
