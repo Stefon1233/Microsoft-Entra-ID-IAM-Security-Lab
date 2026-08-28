@@ -79,7 +79,8 @@ Audit**
            Sign-In Logs                     Audit Logs
                 |                               |
         Authentication Analysis         Change Investigation
-'''
+```
+
 ---
 
 ## Lab Environment
