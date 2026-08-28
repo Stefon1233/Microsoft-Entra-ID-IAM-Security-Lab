@@ -154,9 +154,6 @@ Membership](Screenshots/Users-Groups/04-CA-Test-Group-Membership.png)
 
 ---
 
-### Block 2 of 6
-
-```markdown
 ## Multifactor Authentication & Microsoft Authenticator
 
 Microsoft Authenticator was configured and tested as part of the lab's
